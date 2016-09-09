@@ -15,11 +15,16 @@ app.route('/*').get(function(req, res) {
 
 server.listen(2000);
 
-
+var SOCKET_LIST = {};
 
 var io = require('socket.io')(server,{});
 io.sockets.on('connection', function(socket) {
 	console.log("connection established.");
+	socket.id = Math.random();
+	socket.x = 0;
+	socket.y = 0;
+	SOCKET_LIST[socket.id] = socket;	
+
 
 	socket.on('init',function(data) {
 		console.log( "INIT FROM CLIENT : " + data.message );
@@ -30,3 +35,18 @@ io.sockets.on('connection', function(socket) {
 	});
 
 });
+
+
+setInterval(function(){
+	for(var i in SOCKET_LIST) {
+		var socket = SOCKET_LIST[i];
+		socket.x++;
+		socket.y++; 
+		socket.emit('newPosition',{
+			x: socket.x,
+			y: socket.y
+		});
+	}
+},1000/25);
+
+

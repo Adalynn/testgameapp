@@ -1,4 +1,15 @@
-<b>HELLO WORLD</b>
+<!doctype html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+<head>
+	<title>Client</title>
+  <meta charset="utf-8">
+</head>
+<body>
+	<canvas id="ctx" width="400" height="400" style="border:1px solid #000000;"></canvas>
+	<button onclick="start(); ">Say Hi</button>
+</body>
+
+
 <script type="text/javascript" src="/js/socket.io-1.4.5.js"></script>
 <script type="text/javascript">
 
@@ -9,7 +20,7 @@ var socket = io();
 //socket.emit('init',{ message:"First Request Came." });
 
 var rand = Math.random();
-	
+
 var start = function(){
 	socket.emit('init',{ message:"First Request Came" + rand });
 }
@@ -21,9 +32,16 @@ socket.on('responseMsg',function(data){
 	console.dir(data.message);
 });
 
+var canvas = document.getElementById("ctx");
+var ctx = 	canvas.getContext("2d");
+ctx.font = "30px Arial";
+
+socket.on('newPosition',function(data){
+	ctx.clearRect(0,0,400,400);
+	ctx.fillText('A', data.x, data.y);
+});
 
 
 </script>
 
-
-<button onclick="start(); ">Say Hi</button>
+</html>
