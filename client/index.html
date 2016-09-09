@@ -1,0 +1,29 @@
+<b>HELLO WORLD</b>
+<script type="text/javascript" src="/js/socket.io-1.4.5.js"></script>
+<script type="text/javascript">
+
+
+var socket = io();
+
+// socket.emit('type',{message:abcd,region:us})
+//socket.emit('init',{ message:"First Request Came." });
+
+var rand = Math.random();
+	
+var start = function(){
+	socket.emit('init',{ message:"First Request Came" + rand });
+}
+
+
+
+
+socket.on('responseMsg',function(data){
+	console.dir(data.message);
+});
+
+
+
+</script>
+
+
+<button onclick="start(); ">Say Hi</button>
