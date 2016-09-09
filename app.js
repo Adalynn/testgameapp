@@ -23,7 +23,13 @@ io.sockets.on('connection', function(socket) {
 	socket.id = Math.random();
 	socket.x = 0;
 	socket.y = 0;
+	socket.number = "" + Math.floor(10 * Math.random());
 	SOCKET_LIST[socket.id] = socket;	
+
+	socket.on('disconnect', function(){
+		delete SOCKET_LIST[socket.id];
+	})
+
 
 
 	socket.on('init',function(data) {
@@ -45,7 +51,8 @@ setInterval(function(){
 		socket.y++;
 		pack.push({
 			x: socket.x,
-			y: socket.y			
+			y: socket.y,
+			number: socket.number
 		}) 
 		// socket.emit('newPosition',{
 		// 	x: socket.x,

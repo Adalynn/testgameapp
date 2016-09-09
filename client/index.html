@@ -15,7 +15,7 @@
 
 
 var socket = io();
-
+//https://www.youtube.com/watch?v=hO14DHHpgxw
 // socket.emit('type',{message:abcd,region:us})
 //socket.emit('init',{ message:"First Request Came." });
 
@@ -44,7 +44,7 @@ ctx.font = "30px Arial";
 socket.on('newPositions',function(data){
 	ctx.clearRect(0,0,400,400);
 	for(var i = 0; i< data.length; i++)
-		ctx.fillText('A', data[i].x, data[i].y);
+		ctx.fillText(data[i].number, data[i].x, data[i].y);
 });
 
 
